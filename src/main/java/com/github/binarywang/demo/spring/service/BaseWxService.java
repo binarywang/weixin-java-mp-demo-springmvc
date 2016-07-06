@@ -1,0 +1,129 @@
+package com.github.binarywang.demo.spring.service;
+
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.github.binarywang.demo.spring.config.WxConfig;
+import com.github.binarywang.demo.spring.handler.AbstractHandler;
+import com.github.binarywang.demo.spring.handler.MenuHandler;
+import com.github.binarywang.demo.spring.handler.MsgHandler;
+import com.github.binarywang.demo.spring.handler.NullHandler;
+import com.github.binarywang.demo.spring.handler.SubscribeHandler;
+import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
+import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
+import me.chanjar.weixin.mp.api.WxMpMessageRouter;
+import me.chanjar.weixin.mp.api.WxMpServiceImpl;
+import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+
+/**
+ * 
+ * @author Binary Wang
+ *
+ */
+public abstract class BaseWxService extends WxMpServiceImpl {
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  @Autowired
+  protected NullHandler nullHandler;
+
+  private WxMpMessageRouter router;
+
+  protected abstract WxConfig getServerConfig();
+
+  protected abstract MenuHandler getMenuHandler();
+
+  protected abstract SubscribeHandler getSubscribeHandler();
+
+  protected abstract UnsubscribeHandler getUnsubscribeHandler();
+
+  protected abstract AbstractHandler getLocationHandler();
+
+  protected abstract MsgHandler getMsgHandler();
+
+  protected abstract AbstractHandler getScanHandler();
+
+  @PostConstruct
+  public void init() {
+    final WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
+    config.setAppId(this.getServerConfig().getAppid());// 设置微信公众号的appid
+    config.setSecret(this.getServerConfig().getAppsecret());// 设置微信公众号的app corpSecret
+    config.setToken(this.getServerConfig().getToken());// 设置微信公众号的token
+    super.setWxMpConfigStorage(config);
+
+    this.refreshRouter();
+  }
+
+  private void refreshRouter() {
+
+    final WxMpMessageRouter newRouter = new WxMpMessageRouter(this);
+
+    // 自定义菜单事件
+    newRouter.rule().async(false).event(WxConsts.BUTTON_CLICK)
+        .handler(this.getMenuHandler()).end();
+
+    // 点击菜单连接事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.BUTTON_VIEW).handler(this.nullHandler).end();
+
+    // 关注事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.EVT_SUBSCRIBE).handler(this.getSubscribeHandler())
+        .end();
+
+    // 取消关注事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.EVT_UNSUBSCRIBE).handler(this.getUnsubscribeHandler())
+        .end();
+
+    // 上报地理位置事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.EVT_LOCATION).handler(this.getLocationHandler()).end();
+
+    // 接收地理位置消息
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_LOCATION)
+        .handler(this.getLocationHandler()).end();
+
+    // 扫码事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.EVT_SCAN).handler(this.getScanHandler()).end();
+
+    // 默认
+    newRouter.rule().async(false).handler(this.getMsgHandler()).end();
+
+    this.router = newRouter;
+  }
+
+  public WxMpXmlOutMessage route(WxMpXmlMessage message) {
+    try {
+      final WxMpXmlOutMessage responseMessage = this.router.route(message);
+      return responseMessage;
+    } catch (Exception e) {
+      this.logger.error(e.getMessage(), e);
+    }
+
+    return null;
+  }
+
+  public boolean isCustomerServiceOnline() {
+    try {
+      String url = "https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist";
+      String executeResult = this.get(url, null);
+      JsonArray jsonArray = new JsonParser().parse(executeResult)
+          .getAsJsonObject().get("kf_online_list").getAsJsonArray();
+      return jsonArray.size() > 0;
+    } catch (Exception e) {
+      this.logger.error("获取客服在线状态异常: " + e.getMessage(), e);
+    }
+
+    return false;
+  }
+
+}
