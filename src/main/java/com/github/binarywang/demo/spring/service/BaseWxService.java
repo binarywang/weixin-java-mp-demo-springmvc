@@ -11,10 +11,9 @@ import com.github.binarywang.demo.spring.handler.AbstractHandler;
 import com.github.binarywang.demo.spring.handler.MenuHandler;
 import com.github.binarywang.demo.spring.handler.MsgHandler;
 import com.github.binarywang.demo.spring.handler.NullHandler;
+import com.github.binarywang.demo.spring.handler.LogHandler;
 import com.github.binarywang.demo.spring.handler.SubscribeHandler;
 import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
@@ -22,6 +21,7 @@ import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.customerservice.result.WxMpKfOnlineList;
 
 /**
  * 
@@ -30,6 +30,9 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  */
 public abstract class BaseWxService extends WxMpServiceImpl {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  @Autowired
+  protected LogHandler logHandler;
 
   @Autowired
   protected NullHandler nullHandler;
@@ -65,9 +68,12 @@ public abstract class BaseWxService extends WxMpServiceImpl {
 
     final WxMpMessageRouter newRouter = new WxMpMessageRouter(this);
 
+    //记录所有事件的日志
+    newRouter.rule().handler(this.logHandler).next();
+
     // 自定义菜单事件
-    newRouter.rule().async(false).event(WxConsts.BUTTON_CLICK)
-        .handler(this.getMenuHandler()).end();
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.BUTTON_CLICK).handler(this.getMenuHandler()).end();
 
     // 点击菜单连接事件
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
@@ -112,13 +118,10 @@ public abstract class BaseWxService extends WxMpServiceImpl {
     return null;
   }
 
-  public boolean isCustomerServiceOnline() {
+  public boolean hasKefuOnline() {
     try {
-      String url = "https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist";
-      String executeResult = this.get(url, null);
-      JsonArray jsonArray = new JsonParser().parse(executeResult)
-          .getAsJsonObject().get("kf_online_list").getAsJsonArray();
-      return jsonArray.size() > 0;
+      WxMpKfOnlineList kfOnlineList = this.getKefuService().kfOnlineList();
+      return kfOnlineList != null && kfOnlineList.getKfOnlineList().size() > 0;
     } catch (Exception e) {
       this.logger.error("获取客服在线状态异常: " + e.getMessage(), e);
     }

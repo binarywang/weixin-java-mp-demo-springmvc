@@ -31,9 +31,9 @@ public abstract class MsgHandler extends AbstractHandler {
             //TODO 可以选择将消息保存到本地
         }
 
-        //当用户输入关键词如“你好”，“在吗”等并且有客服在线时，把消息转发给在线客服
-        if (StringUtils.startsWithAny(wxMessage.getContent(), "你好", "在吗")
-            && weixinService.isCustomerServiceOnline()) {
+        //当用户输入关键词如“是”，“客服”等并且有客服在线时，把消息转发给在线客服
+        if (StringUtils.startsWithAny(wxMessage.getContent(), "是","客服")
+            && weixinService.hasKefuOnline()) {
             return WxMpXmlOutMessage
                 .TRANSFER_CUSTOMER_SERVICE().fromUser(wxMessage.getToUserName())
                 .toUser(wxMessage.getFromUserName()).build();
