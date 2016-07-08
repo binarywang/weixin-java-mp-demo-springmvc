@@ -2,8 +2,6 @@ package com.github.binarywang.demo.spring.handler;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.github.binarywang.demo.spring.config.WxConfig;
@@ -20,8 +18,6 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  */
 @Component
 public class LogHandler extends AbstractHandler {
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
       Map<String, Object> context, WxMpService wxMpService,
