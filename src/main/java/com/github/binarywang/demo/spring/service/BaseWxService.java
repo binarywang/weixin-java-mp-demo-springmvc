@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.binarywang.demo.spring.config.WxConfig;
 import com.github.binarywang.demo.spring.handler.AbstractHandler;
+import com.github.binarywang.demo.spring.handler.KfSessionHandler;
+import com.github.binarywang.demo.spring.handler.LogHandler;
 import com.github.binarywang.demo.spring.handler.MenuHandler;
 import com.github.binarywang.demo.spring.handler.MsgHandler;
 import com.github.binarywang.demo.spring.handler.NullHandler;
-import com.github.binarywang.demo.spring.handler.LogHandler;
 import com.github.binarywang.demo.spring.handler.SubscribeHandler;
 import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
 
@@ -37,6 +38,9 @@ public abstract class BaseWxService extends WxMpServiceImpl {
   @Autowired
   protected NullHandler nullHandler;
 
+  @Autowired
+  protected KfSessionHandler kfSessionHandler;
+
   private WxMpMessageRouter router;
 
   protected abstract WxConfig getServerConfig();
@@ -50,7 +54,7 @@ public abstract class BaseWxService extends WxMpServiceImpl {
   protected abstract AbstractHandler getLocationHandler();
 
   protected abstract MsgHandler getMsgHandler();
-
+  
   protected abstract AbstractHandler getScanHandler();
 
   @PostConstruct
@@ -68,9 +72,19 @@ public abstract class BaseWxService extends WxMpServiceImpl {
 
     final WxMpMessageRouter newRouter = new WxMpMessageRouter(this);
 
-    //记录所有事件的日志
+    // 记录所有事件的日志
     newRouter.rule().handler(this.logHandler).next();
 
+    // 接收客服会话管理事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+        .event(WxConsts.EVT_KF_CREATE_SESSION).handler(this.kfSessionHandler).end();
+    
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+    .event(WxConsts.EVT_KF_CLOSE_SESSION).handler(this.kfSessionHandler).end();
+    
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+    .event(WxConsts.EVT_KF_SWITCH_SESSION).handler(this.kfSessionHandler).end();
+    
     // 自定义菜单事件
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
         .event(WxConsts.BUTTON_CLICK).handler(this.getMenuHandler()).end();
@@ -106,6 +120,7 @@ public abstract class BaseWxService extends WxMpServiceImpl {
 
     this.router = newRouter;
   }
+
 
   public WxMpXmlOutMessage route(WxMpXmlMessage message) {
     try {
