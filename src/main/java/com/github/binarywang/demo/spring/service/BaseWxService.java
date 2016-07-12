@@ -22,7 +22,7 @@ import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.customerservice.result.WxMpKfOnlineList;
+import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
 
 /**
  * 
