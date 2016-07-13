@@ -1,5 +1,6 @@
 package com.github.binarywang.demo.spring.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,8 @@ public abstract class AbstractWxPortalController {
       @RequestParam("timestamp") String timestamp,
       @RequestParam("nonce") String nonce,
       @RequestParam("echostr") String echostr) {
-    this.logger.info("接收到来自微信服务器的认证消息");
+    this.logger.info("\n接收到来自微信服务器的认证消息：[{},{},{},{}]",
+            signature, timestamp, nonce, echostr);
 
     if (this.getWxService().checkSignature(timestamp, nonce, signature)) {
       return echostr;
@@ -37,24 +39,40 @@ public abstract class AbstractWxPortalController {
   }
 
   @RequestMapping(method = RequestMethod.POST, produces = "application/xml; charset=UTF-8")
-  public @ResponseBody String post(@RequestBody String requestBody) {
+  public @ResponseBody String post(@RequestBody String requestBody,
+                                   @RequestParam("signature") String signature,
+                                   @RequestParam("encrypt_type") String encType,
+                                   @RequestParam("msg_signature") String msgSignature,
+                                   @RequestParam("timestamp") String timestamp,
+                                   @RequestParam("nonce") String nonce) {
+    this.logger.info("\n接收微信请求：[{},{},{},{},{}]\n{} ",
+                        signature, encType, msgSignature, timestamp, nonce, requestBody);
 
-    this.logger.debug("\n接收微信请求：{} ", requestBody);
+    String out = null;
+    if (encType == null) {
+      // 明文传输的消息
+      WxMpXmlMessage inMessage = WxMpXmlMessage.fromXml(requestBody);
+      WxMpXmlOutMessage outMessage = this.getWxService().route(inMessage);
+      if (outMessage == null) {
+        return "";
+      }
+      out = outMessage.toXml();
+    }else if ("aes".equals(encType)) {
+      // aes加密的消息
+      WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(requestBody,
+              this.getWxService().getWxMpConfigStorage(), timestamp, nonce, msgSignature);
+      this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+      WxMpXmlOutMessage outMessage = this.getWxService().route(inMessage);
+      if (outMessage == null) {
+        return "";
+      }
 
-    BaseWxService wxService = this.getWxService();
-
-    WxMpXmlOutMessage out = wxService
-        .route(WxMpXmlMessage.fromXml(requestBody));
-
-    if (out == null) {
-      return "";
+      out = outMessage.toEncryptedXml(this.getWxService().getWxMpConfigStorage());
     }
 
-    String outXml = out.toXml();
+    this.logger.debug("\n组装回复信息：{}", out);
 
-    this.logger.debug("\n组装回复信息：{}", outXml);
-
-    return outXml;
+    return out;
   }
 
   protected abstract BaseWxService getWxService();

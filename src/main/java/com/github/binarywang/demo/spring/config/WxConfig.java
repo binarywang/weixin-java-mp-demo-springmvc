@@ -12,6 +12,8 @@ public abstract class WxConfig {
 
     public abstract String getAppsecret();
 
+    public abstract String getAesKey();
+
     public abstract WxAccountEnum getWxAccountEnum();
 
     public int getPubId() {

@@ -19,6 +19,9 @@ public class WxGzh1Config extends WxConfig {
     @Value("#{gzh1WxProperties.wx_appsecret}")
     private String appsecret;
 
+    @Value("#{gzh1WxProperties.wx_aeskey}")
+    private String aesKey;
+
     @Override
     public String getToken() {
         return this.token;
@@ -32,6 +35,11 @@ public class WxGzh1Config extends WxConfig {
     @Override
     public String getAppsecret() {
         return this.appsecret;
+    }
+
+    @Override
+    public String getAesKey() {
+        return this.aesKey;
     }
 
     @Override
