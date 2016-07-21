@@ -22,7 +22,7 @@ public class LogHandler extends AbstractHandler {
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
       Map<String, Object> context, WxMpService wxMpService,
       WxSessionManager sessionManager) {
-    this.logger.info("接收到请求消息，内容：【{}】", wxMessage.toString());
+    this.logger.info("\n接收到请求消息，内容：【{}】", wxMessage.toString());
     return null;
   }
 

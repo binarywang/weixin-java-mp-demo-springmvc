@@ -34,15 +34,15 @@ public abstract class SubscribeHandler extends AbstractHandler {
       // TODO 可以添加关注用户到本地
     }
 
-    WxMpXmlOutMessage responsResult = null;
+    WxMpXmlOutMessage responseResult = null;
     try {
-      responsResult = handleSpecial(wxMessage);
+      responseResult = handleSpecial(wxMessage);
     } catch (Exception e) {
       this.logger.error(e.getMessage(), e);
     }
 
-    if (responsResult != null) {
-      return responsResult;
+    if (responseResult != null) {
+      return responseResult;
     }
 
     try {
