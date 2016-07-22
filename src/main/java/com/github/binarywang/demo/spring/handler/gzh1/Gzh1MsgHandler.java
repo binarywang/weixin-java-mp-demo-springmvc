@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.github.binarywang.demo.spring.config.WxConfig;
 import com.github.binarywang.demo.spring.config.WxGzh1Config;
-import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
+import com.github.binarywang.demo.spring.handler.MsgHandler;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Gzh1UnSubscribeHadler extends UnsubscribeHandler {
+public class Gzh1MsgHandler extends MsgHandler {
   @Autowired
   private  WxGzh1Config wxConfig;
 

@@ -11,7 +11,7 @@ import com.github.binarywang.demo.spring.handler.MenuHandler;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class Gzh1MenuHadler extends MenuHandler {
+public class Gzh1MenuHandler extends MenuHandler {
   @Autowired
   private  WxGzh1Config wxConfig;
 

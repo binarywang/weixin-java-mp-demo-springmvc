@@ -11,10 +11,10 @@ import com.github.binarywang.demo.spring.handler.MsgHandler;
 import com.github.binarywang.demo.spring.handler.SubscribeHandler;
 import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
 import com.github.binarywang.demo.spring.handler.gzh1.Gzh1LocationHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MenuHadler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MsgHadler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1SubscribeHadler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1UnSubscribeHadler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MenuHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MsgHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1SubscribeHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1UnSubscribeHandler;
 
 /**
  * 
@@ -30,16 +30,16 @@ public class Gzh1WxService extends BaseWxService {
   private Gzh1LocationHandler locationHandler;
   
   @Autowired
-  private Gzh1MenuHadler menuHadler;
+  private Gzh1MenuHandler menuHandler;
   
   @Autowired
-  private Gzh1MsgHadler msgHadler;
+  private Gzh1MsgHandler msgHandler;
   
   @Autowired
-  private Gzh1UnSubscribeHadler unSubscribeHadler;
+  private Gzh1UnSubscribeHandler unSubscribeHandler;
   
   @Autowired
-  private Gzh1SubscribeHadler subscribeHadler;
+  private Gzh1SubscribeHandler subscribeHandler;
 
   @Override
   protected WxConfig getServerConfig() {
@@ -48,17 +48,17 @@ public class Gzh1WxService extends BaseWxService {
 
   @Override
   protected MenuHandler getMenuHandler() {
-    return this.menuHadler;
+    return this.menuHandler;
   }
 
   @Override
   protected SubscribeHandler getSubscribeHandler() {
-    return this.subscribeHadler;
+    return this.subscribeHandler;
   }
 
   @Override
   protected UnsubscribeHandler getUnsubscribeHandler() {
-    return this.unSubscribeHadler;
+    return this.unSubscribeHandler;
   }
 
   @Override
@@ -68,7 +68,7 @@ public class Gzh1WxService extends BaseWxService {
 
   @Override
   protected MsgHandler getMsgHandler() {
-    return this.msgHadler;
+    return this.msgHandler;
   }
 
   @Override
