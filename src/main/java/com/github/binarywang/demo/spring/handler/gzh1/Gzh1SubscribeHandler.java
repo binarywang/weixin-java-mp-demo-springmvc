@@ -24,8 +24,7 @@ public class Gzh1SubscribeHandler extends SubscribeHandler {
   }
 
   @Override
-  protected WxMpXmlOutMessage handleSpecial(WxMpXmlMessage wxMessage)
-      throws Exception {
+  protected WxMpXmlOutMessage handleSpecial(WxMpXmlMessage wxMessage) {
     return null;
   }
 

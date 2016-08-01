@@ -5,7 +5,6 @@ import java.util.Map;
 import com.github.binarywang.demo.spring.builder.TextBuilder;
 
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
@@ -21,7 +20,7 @@ public abstract class LocationHandler extends AbstractHandler {
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
             Map<String, Object> context, WxMpService wxMpService,
-            WxSessionManager sessionManager) throws WxErrorException {
+            WxSessionManager sessionManager) {
         if (wxMessage.getMsgType().equals(WxConsts.XML_MSG_LOCATION)) {
             //TODO 接收处理用户发送的地理位置消息
             try {
