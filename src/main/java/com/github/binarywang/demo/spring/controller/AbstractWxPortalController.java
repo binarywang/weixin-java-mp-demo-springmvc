@@ -14,21 +14,20 @@ import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 
 /**
- * 
  * @author Binary Wang
- *
  */
 public abstract class AbstractWxPortalController {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  @RequestMapping(method = RequestMethod.GET, produces = "text/plain;charset=utf-8")
+  @RequestMapping(method = RequestMethod.GET,
+      produces = "text/plain;charset=utf-8")
   public @ResponseBody String authGet(
       @RequestParam("signature") String signature,
       @RequestParam("timestamp") String timestamp,
       @RequestParam("nonce") String nonce,
       @RequestParam("echostr") String echostr) {
-    this.logger.info("\n接收到来自微信服务器的认证消息：[{},{},{},{}]",
-            signature, timestamp, nonce, echostr);
+    this.logger.info("\n接收到来自微信服务器的认证消息：[{},{},{},{}]", signature, timestamp,
+      nonce, echostr);
 
     if (this.getWxService().checkSignature(timestamp, nonce, signature)) {
       return echostr;
@@ -37,15 +36,16 @@ public abstract class AbstractWxPortalController {
     return "非法请求";
   }
 
-  @RequestMapping(method = RequestMethod.POST, produces = "application/xml; charset=UTF-8")
+  @RequestMapping(method = RequestMethod.POST,
+      produces = "application/xml; charset=UTF-8")
   public @ResponseBody String post(@RequestBody String requestBody,
-                                   @RequestParam("signature") String signature,
-                                   @RequestParam("encrypt_type") String encType,
-                                   @RequestParam("msg_signature") String msgSignature,
-                                   @RequestParam("timestamp") String timestamp,
-                                   @RequestParam("nonce") String nonce) {
-    this.logger.info("\n接收微信请求：[{},{},{},{},{}]\n{} ",
-                        signature, encType, msgSignature, timestamp, nonce, requestBody);
+      @RequestParam("signature") String signature,
+      @RequestParam(name = "encrypt_type", required = false) String encType,
+      @RequestParam("msg_signature") String msgSignature,
+      @RequestParam("timestamp") String timestamp,
+      @RequestParam("nonce") String nonce) {
+    this.logger.info("\n接收微信请求：[{},{},{},{},{}]\n{} ", signature, encType,
+      msgSignature, timestamp, nonce, requestBody);
 
     String out = null;
     if (encType == null) {
@@ -56,17 +56,19 @@ public abstract class AbstractWxPortalController {
         return "";
       }
       out = outMessage.toXml();
-    }else if ("aes".equals(encType)) {
+    } else if ("aes".equals(encType)) {
       // aes加密的消息
       WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(requestBody,
-              this.getWxService().getWxMpConfigStorage(), timestamp, nonce, msgSignature);
+        this.getWxService().getWxMpConfigStorage(), timestamp, nonce,
+        msgSignature);
       this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
       WxMpXmlOutMessage outMessage = this.getWxService().route(inMessage);
       if (outMessage == null) {
         return "";
       }
 
-      out = outMessage.toEncryptedXml(this.getWxService().getWxMpConfigStorage());
+      out = outMessage
+        .toEncryptedXml(this.getWxService().getWxMpConfigStorage());
     }
 
     this.logger.debug("\n组装回复信息：{}", out);
