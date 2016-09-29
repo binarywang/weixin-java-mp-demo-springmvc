@@ -1,7 +1,22 @@
 package com.github.binarywang.demo.spring.service;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.github.binarywang.demo.spring.config.WxConfig;
-import com.github.binarywang.demo.spring.handler.*;
+import com.github.binarywang.demo.spring.handler.AbstractHandler;
+import com.github.binarywang.demo.spring.handler.KfSessionHandler;
+import com.github.binarywang.demo.spring.handler.LogHandler;
+import com.github.binarywang.demo.spring.handler.MenuHandler;
+import com.github.binarywang.demo.spring.handler.MsgHandler;
+import com.github.binarywang.demo.spring.handler.NullHandler;
+import com.github.binarywang.demo.spring.handler.StoreCheckNotifyHandler;
+import com.github.binarywang.demo.spring.handler.SubscribeHandler;
+import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
+
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
@@ -9,11 +24,6 @@ import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
 
 /**
  * 
@@ -31,6 +41,9 @@ public abstract class BaseWxService extends WxMpServiceImpl {
 
   @Autowired
   protected KfSessionHandler kfSessionHandler;
+
+  @Autowired
+  protected StoreCheckNotifyHandler storeCheckNotifyHandler;
 
   private WxMpMessageRouter router;
 
@@ -77,6 +90,12 @@ public abstract class BaseWxService extends WxMpServiceImpl {
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
     .event(WxConsts.EVT_KF_SWITCH_SESSION).handler(this.kfSessionHandler).end();
     
+    // 门店审核事件
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+      .event(WxConsts.EVT_POI_CHECK_NOTIFY)
+      .handler(this.storeCheckNotifyHandler)
+      .end();
+
     // 自定义菜单事件
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
         .event(WxConsts.BUTTON_CLICK).handler(this.getMenuHandler()).end();
