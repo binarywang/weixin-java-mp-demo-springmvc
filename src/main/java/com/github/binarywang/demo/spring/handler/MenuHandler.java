@@ -34,8 +34,8 @@ public abstract class MenuHandler extends AbstractHandler {
       menuKey = JSON.parseObject(key, WxMenuKey.class);
     } catch (Exception e) {
       return WxMpXmlOutMessage.TEXT().content(key)
-          .fromUser(wxMessage.getToUserName())
-          .toUser(wxMessage.getFromUserName()).build();
+          .fromUser(wxMessage.getToUser())
+          .toUser(wxMessage.getFromUser()).build();
     }
 
     AbstractBuilder builder = null;

@@ -17,7 +17,7 @@ public class TextBuilder extends AbstractBuilder {
   public WxMpXmlOutMessage build(String content, WxMpXmlMessage wxMessage,
       BaseWxService service)   {
     WxMpXmlOutTextMessage m = WxMpXmlOutMessage.TEXT().content(content)
-        .fromUser(wxMessage.getToUserName()).toUser(wxMessage.getFromUserName())
+        .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
         .build();
     return m;
   }

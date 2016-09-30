@@ -35,8 +35,8 @@ public abstract class MsgHandler extends AbstractHandler {
         if (StringUtils.startsWithAny(wxMessage.getContent(), "你好", "客服")
             && weixinService.hasKefuOnline()) {
             return WxMpXmlOutMessage
-                .TRANSFER_CUSTOMER_SERVICE().fromUser(wxMessage.getToUserName())
-                .toUser(wxMessage.getFromUserName()).build();
+                .TRANSFER_CUSTOMER_SERVICE().fromUser(wxMessage.getToUser())
+                .toUser(wxMessage.getFromUser()).build();
         }
 
         //TODO 组装回复消息

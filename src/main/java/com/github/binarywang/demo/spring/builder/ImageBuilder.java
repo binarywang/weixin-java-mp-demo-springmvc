@@ -18,7 +18,7 @@ public class ImageBuilder extends AbstractBuilder {
       BaseWxService service) {
 
     WxMpXmlOutImageMessage m = WxMpXmlOutMessage.IMAGE().mediaId(content)
-        .fromUser(wxMessage.getToUserName()).toUser(wxMessage.getFromUserName())
+        .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
         .build();
 
     return m;
