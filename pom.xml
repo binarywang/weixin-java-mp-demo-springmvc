@@ -11,7 +11,7 @@
 	<description>weixin mp demo with spring MVC</description>
 	<url>https://github.com/wechat-group/weixin-mp-demo</url>
 	<properties>
-		<weixin-java-mp.version>2.2.1</weixin-java-mp.version>
+		<weixin-java-mp.version>2.2.2</weixin-java-mp.version>
 		<spring.version>4.3.0.RELEASE</spring.version>
 		<spring-security.version>4.1.0.RELEASE</spring-security.version>
 		<guava.version>19.0</guava.version>
