@@ -81,14 +81,12 @@ public abstract class BaseWxService extends WxMpServiceImpl {
     newRouter.rule().handler(this.logHandler).next();
 
     // 接收客服会话管理事件
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
-        .event(WxConsts.EVT_KF_CREATE_SESSION).handler(this.kfSessionHandler).end();
-    
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
-    .event(WxConsts.EVT_KF_CLOSE_SESSION).handler(this.kfSessionHandler).end();
-    
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
-    .event(WxConsts.EVT_KF_SWITCH_SESSION).handler(this.kfSessionHandler).end();
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_CREATE_SESSION)
+        .handler(this.kfSessionHandler).end();
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_CLOSE_SESSION)
+        .handler(this.kfSessionHandler).end();
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_SWITCH_SESSION)
+        .handler(this.kfSessionHandler).end();
     
     // 门店审核事件
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
