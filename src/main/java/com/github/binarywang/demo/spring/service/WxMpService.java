@@ -3,7 +3,7 @@ package com.github.binarywang.demo.spring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.binarywang.demo.spring.config.WxGzh1Config;
+import com.github.binarywang.demo.spring.config.WxMpConfig;
 import com.github.binarywang.demo.spring.config.WxConfig;
 import com.github.binarywang.demo.spring.handler.AbstractHandler;
 import com.github.binarywang.demo.spring.handler.MenuHandler;
@@ -22,9 +22,9 @@ import com.github.binarywang.demo.spring.handler.gzh1.Gzh1UnSubscribeHandler;
  *
  */
 @Service
-public class Gzh1WxService extends BaseWxService {
+public class WxMpService extends BaseWxService {
   @Autowired
-  private WxGzh1Config wxConfig;
+  private WxMpConfig wxConfig;
 
   @Autowired
   private Gzh1LocationHandler locationHandler;

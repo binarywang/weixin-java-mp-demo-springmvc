@@ -9,17 +9,17 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
-public class WxGzh2Config extends WxConfig {
-    @Value("#{gzh2WxProperties.wx_token}")
+public class WxMpConfig extends WxConfig {
+  @Value("#{wxProperties.wx_token}")
     private String token;
 
-    @Value("#{gzh2WxProperties.wx_appid}")
+  @Value("#{wxProperties.wx_appid}")
     private String appid;
 
-    @Value("#{gzh2WxProperties.wx_appsecret}")
+  @Value("#{wxProperties.wx_appsecret}")
     private String appsecret;
 
-    @Value("#{gzh2WxProperties.wx_aeskey}")
+  @Value("#{wxProperties.wx_aeskey}")
     private String aesKey;
 
     @Override
@@ -44,7 +44,7 @@ public class WxGzh2Config extends WxConfig {
 
     @Override
     public WxAccountEnum getWxAccountEnum() {
-        return WxAccountEnum.GZH2;
+        return WxAccountEnum.GZH1;
     }
 
 }

@@ -11,7 +11,6 @@
 
   <import resource="classpath*:spring-service-bean.xml" />
 
-  <util:properties id="gzh1WxProperties" location="classpath:/wx-gzh1.properties" />
-  <util:properties id="gzh2WxProperties" location="classpath:/wx-gzh2.properties" />
+  <util:properties id="wxProperties" location="classpath:/wx.properties" />
 
 </beans>

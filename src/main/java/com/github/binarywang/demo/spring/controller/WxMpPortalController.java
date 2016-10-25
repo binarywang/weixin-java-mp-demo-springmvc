@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.binarywang.demo.spring.service.BaseWxService;
-import com.github.binarywang.demo.spring.service.Gzh1WxService;
+import com.github.binarywang.demo.spring.service.WxMpService;
 
 /**
  * 第一个公众号的微信交互接口
@@ -14,9 +14,9 @@ import com.github.binarywang.demo.spring.service.Gzh1WxService;
  */
 @RestController
 @RequestMapping("/api/gzh1/portal")
-public class Gzh1WxPortalController extends AbstractWxPortalController{
+public class WxMpPortalController extends AbstractWxPortalController{
   @Autowired
-  private Gzh1WxService wxService;
+  private WxMpService wxService;
   
   @Override
   protected BaseWxService getWxService() {
