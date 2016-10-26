@@ -1,15 +1,16 @@
 package com.github.binarywang.demo.spring.handler;
 
+import java.util.Map;
+
 import com.github.binarywang.demo.spring.builder.TextBuilder;
-import com.github.binarywang.demo.spring.service.BaseWxService;
+import com.github.binarywang.demo.spring.service.WeixinService;
+
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
-
-import java.util.Map;
 
 /**
  * 
@@ -24,7 +25,7 @@ public abstract class SubscribeHandler extends AbstractHandler {
 
     this.logger.info("新关注用户 OPENID: " + wxMessage.getFromUser());
 
-    BaseWxService weixinService = (BaseWxService) wxMpService;
+    WeixinService weixinService = (WeixinService) wxMpService;
 
     // 获取微信用户基本信息
     WxMpUser userWxInfo = weixinService.getUserService().userInfo(wxMessage.getFromUser(), null);

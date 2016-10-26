@@ -5,8 +5,10 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.github.binarywang.demo.spring.config.WxConfig;
+import com.github.binarywang.demo.spring.config.WxMpConfig;
 import com.github.binarywang.demo.spring.handler.AbstractHandler;
 import com.github.binarywang.demo.spring.handler.KfSessionHandler;
 import com.github.binarywang.demo.spring.handler.LogHandler;
@@ -16,6 +18,11 @@ import com.github.binarywang.demo.spring.handler.NullHandler;
 import com.github.binarywang.demo.spring.handler.StoreCheckNotifyHandler;
 import com.github.binarywang.demo.spring.handler.SubscribeHandler;
 import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1LocationHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MenuHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MsgHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1SubscribeHandler;
+import com.github.binarywang.demo.spring.handler.gzh1.Gzh1UnSubscribeHandler;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
@@ -30,7 +37,8 @@ import me.chanjar.weixin.mp.bean.kefu.result.WxMpKfOnlineList;
  * @author Binary Wang
  *
  */
-public abstract class BaseWxService extends WxMpServiceImpl {
+@Service
+public class WeixinService extends WxMpServiceImpl {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired
@@ -46,20 +54,6 @@ public abstract class BaseWxService extends WxMpServiceImpl {
   protected StoreCheckNotifyHandler storeCheckNotifyHandler;
 
   private WxMpMessageRouter router;
-
-  protected abstract WxConfig getServerConfig();
-
-  protected abstract MenuHandler getMenuHandler();
-
-  protected abstract SubscribeHandler getSubscribeHandler();
-
-  protected abstract UnsubscribeHandler getUnsubscribeHandler();
-
-  protected abstract AbstractHandler getLocationHandler();
-
-  protected abstract MsgHandler getMsgHandler();
-  
-  protected abstract AbstractHandler getScanHandler();
 
   @PostConstruct
   public void init() {
@@ -150,6 +144,53 @@ public abstract class BaseWxService extends WxMpServiceImpl {
     }
 
     return false;
+  }
+
+
+  @Autowired
+  private WxMpConfig wxConfig;
+
+  @Autowired
+  private Gzh1LocationHandler locationHandler;
+
+  @Autowired
+  private Gzh1MenuHandler menuHandler;
+
+  @Autowired
+  private Gzh1MsgHandler msgHandler;
+
+  @Autowired
+  private Gzh1UnSubscribeHandler unSubscribeHandler;
+
+  @Autowired
+  private Gzh1SubscribeHandler subscribeHandler;
+
+  protected WxConfig getServerConfig() {
+    return this.wxConfig;
+  }
+
+  protected MenuHandler getMenuHandler() {
+    return this.menuHandler;
+  }
+
+  protected SubscribeHandler getSubscribeHandler() {
+    return this.subscribeHandler;
+  }
+
+  protected UnsubscribeHandler getUnsubscribeHandler() {
+    return this.unSubscribeHandler;
+  }
+
+  protected AbstractHandler getLocationHandler() {
+    return this.locationHandler;
+  }
+
+  protected MsgHandler getMsgHandler() {
+    return this.msgHandler;
+  }
+
+  protected AbstractHandler getScanHandler() {
+    return null;
   }
 
 }

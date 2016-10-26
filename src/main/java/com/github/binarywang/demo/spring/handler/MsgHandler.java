@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.binarywang.demo.spring.builder.TextBuilder;
-import com.github.binarywang.demo.spring.service.BaseWxService;
+import com.github.binarywang.demo.spring.service.WeixinService;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -22,10 +22,10 @@ public abstract class MsgHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
-            Map<String, Object> context, WxMpService wxMpService,
+      Map<String, Object> context, WxMpService wxMpService,
             WxSessionManager sessionManager)    {
 
-        BaseWxService weixinService = (BaseWxService) wxMpService;
+        WeixinService weixinService = (WeixinService) wxMpService;
 
         if (!wxMessage.getMsgType().equals(WxConsts.XML_MSG_EVENT)) {
             //TODO 可以选择将消息保存到本地
