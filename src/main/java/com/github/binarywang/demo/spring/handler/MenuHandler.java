@@ -2,6 +2,10 @@ package com.github.binarywang.demo.spring.handler;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSON;
 import com.github.binarywang.demo.spring.builder.AbstractBuilder;
 import com.github.binarywang.demo.spring.builder.ImageBuilder;
@@ -20,7 +24,9 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  * @author Binary Wang
  *
  */
-public abstract class MenuHandler extends AbstractHandler {
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class MenuHandler extends AbstractHandler {
 
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,

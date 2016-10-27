@@ -2,6 +2,10 @@ package com.github.binarywang.demo.spring.handler;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.github.binarywang.demo.spring.builder.TextBuilder;
 import com.github.binarywang.demo.spring.service.WeixinService;
 
@@ -17,7 +21,9 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
  * @author Binary Wang
  *
  */
-public abstract class SubscribeHandler extends AbstractHandler {
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class SubscribeHandler extends AbstractHandler {
 
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
@@ -57,6 +63,9 @@ public abstract class SubscribeHandler extends AbstractHandler {
   /**
    * 处理特殊请求，比如如果是扫码进来的，可以做相应处理
    */
-  protected abstract WxMpXmlOutMessage handleSpecial(WxMpXmlMessage wxMessage) throws Exception;
+  protected WxMpXmlOutMessage handleSpecial(WxMpXmlMessage wxMessage) throws Exception {
+    //TODO
+    return null;
+  }
 
 }

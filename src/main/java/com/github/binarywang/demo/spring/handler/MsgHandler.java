@@ -3,6 +3,9 @@ package com.github.binarywang.demo.spring.handler;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.github.binarywang.demo.spring.builder.TextBuilder;
 import com.github.binarywang.demo.spring.service.WeixinService;
@@ -18,7 +21,9 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  * @author Binary Wang
  *
  */
-public abstract class MsgHandler extends AbstractHandler {
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class MsgHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,

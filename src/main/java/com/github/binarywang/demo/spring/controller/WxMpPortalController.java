@@ -16,9 +16,7 @@ import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
 
 /**
- * 第一个公众号的微信交互接口
  * @author Binary Wang
- *
  */
 @RestController
 @RequestMapping("/wechat/portal")

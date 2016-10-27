@@ -2,6 +2,10 @@ package com.github.binarywang.demo.spring.handler;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.github.binarywang.demo.spring.builder.TextBuilder;
 
 import me.chanjar.weixin.common.api.WxConsts;
@@ -15,7 +19,9 @@ import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
  * @author Binary Wang
  *
  */
-public abstract class LocationHandler extends AbstractHandler {
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class LocationHandler extends AbstractHandler {
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,

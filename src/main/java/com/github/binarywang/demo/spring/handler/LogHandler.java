@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.binarywang.demo.spring.config.WxConfig;
 
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -38,11 +37,6 @@ public class LogHandler extends AbstractHandler {
       e.printStackTrace();
     }
 
-    return null;
-  }
-
-  @Override
-  protected WxConfig getWxConfig() {
     return null;
   }
 

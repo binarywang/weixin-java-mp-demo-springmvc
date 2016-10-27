@@ -9,42 +9,33 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
-public class WxMpConfig extends WxConfig {
+public class WxMpConfig {
   @Value("#{wxProperties.wx_token}")
-    private String token;
+  private String token;
 
   @Value("#{wxProperties.wx_appid}")
-    private String appid;
+  private String appid;
 
   @Value("#{wxProperties.wx_appsecret}")
-    private String appsecret;
+  private String appsecret;
 
   @Value("#{wxProperties.wx_aeskey}")
-    private String aesKey;
+  private String aesKey;
 
-    @Override
-    public String getToken() {
-        return this.token;
-    }
+  public String getToken() {
+    return this.token;
+  }
 
-    @Override
-    public String getAppid() {
-        return this.appid;
-    }
+  public String getAppid() {
+    return this.appid;
+  }
 
-    @Override
-    public String getAppsecret() {
-        return this.appsecret;
-    }
+  public String getAppsecret() {
+    return this.appsecret;
+  }
 
-    @Override
-    public String getAesKey() {
-        return this.aesKey;
-    }
-
-    @Override
-    public WxAccountEnum getWxAccountEnum() {
-        return WxAccountEnum.GZH1;
-    }
+  public String getAesKey() {
+    return this.aesKey;
+  }
 
 }

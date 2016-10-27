@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.binarywang.demo.spring.config.WxConfig;
 import com.github.binarywang.demo.spring.config.WxMpConfig;
 import com.github.binarywang.demo.spring.handler.AbstractHandler;
 import com.github.binarywang.demo.spring.handler.KfSessionHandler;
+import com.github.binarywang.demo.spring.handler.LocationHandler;
 import com.github.binarywang.demo.spring.handler.LogHandler;
 import com.github.binarywang.demo.spring.handler.MenuHandler;
 import com.github.binarywang.demo.spring.handler.MsgHandler;
@@ -18,11 +18,6 @@ import com.github.binarywang.demo.spring.handler.NullHandler;
 import com.github.binarywang.demo.spring.handler.StoreCheckNotifyHandler;
 import com.github.binarywang.demo.spring.handler.SubscribeHandler;
 import com.github.binarywang.demo.spring.handler.UnsubscribeHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1LocationHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MenuHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1MsgHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1SubscribeHandler;
-import com.github.binarywang.demo.spring.handler.gzh1.Gzh1UnSubscribeHandler;
 
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
@@ -53,22 +48,39 @@ public class WeixinService extends WxMpServiceImpl {
   @Autowired
   protected StoreCheckNotifyHandler storeCheckNotifyHandler;
 
+  @Autowired
+  private WxMpConfig wxConfig;
+
+  @Autowired
+  private LocationHandler locationHandler;
+
+  @Autowired
+  private MenuHandler menuHandler;
+
+  @Autowired
+  private MsgHandler msgHandler;
+
+  @Autowired
+  private UnsubscribeHandler unsubscribeHandler;
+
+  @Autowired
+  private SubscribeHandler subscribeHandler;
+
   private WxMpMessageRouter router;
 
   @PostConstruct
   public void init() {
     final WxMpInMemoryConfigStorage config = new WxMpInMemoryConfigStorage();
-    config.setAppId(this.getServerConfig().getAppid());// 设置微信公众号的appid
-    config.setSecret(this.getServerConfig().getAppsecret());// 设置微信公众号的app corpSecret
-    config.setToken(this.getServerConfig().getToken());// 设置微信公众号的token
-    config.setAesKey(this.getServerConfig().getAesKey());// 设置消息加解密密钥
+    config.setAppId(this.wxConfig.getAppid());// 设置微信公众号的appid
+    config.setSecret(this.wxConfig.getAppsecret());// 设置微信公众号的app corpSecret
+    config.setToken(this.wxConfig.getToken());// 设置微信公众号的token
+    config.setAesKey(this.wxConfig.getAesKey());// 设置消息加解密密钥
     super.setWxMpConfigStorage(config);
 
     this.refreshRouter();
   }
 
   private void refreshRouter() {
-
     final WxMpMessageRouter newRouter = new WxMpMessageRouter(this);
 
     // 记录所有事件的日志
@@ -146,29 +158,6 @@ public class WeixinService extends WxMpServiceImpl {
     return false;
   }
 
-
-  @Autowired
-  private WxMpConfig wxConfig;
-
-  @Autowired
-  private Gzh1LocationHandler locationHandler;
-
-  @Autowired
-  private Gzh1MenuHandler menuHandler;
-
-  @Autowired
-  private Gzh1MsgHandler msgHandler;
-
-  @Autowired
-  private Gzh1UnSubscribeHandler unSubscribeHandler;
-
-  @Autowired
-  private Gzh1SubscribeHandler subscribeHandler;
-
-  protected WxConfig getServerConfig() {
-    return this.wxConfig;
-  }
-
   protected MenuHandler getMenuHandler() {
     return this.menuHandler;
   }
@@ -178,7 +167,7 @@ public class WeixinService extends WxMpServiceImpl {
   }
 
   protected UnsubscribeHandler getUnsubscribeHandler() {
-    return this.unSubscribeHandler;
+    return this.unsubscribeHandler;
   }
 
   protected AbstractHandler getLocationHandler() {
