@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/wechat-group/weixin-mp-demo.svg?branch=master)](https://travis-ci.org/wechat-group/weixin-mp-demo)
 #### 本Demo使用Spring MVC 框架实现微信公众号开发功能，欢迎帮忙维护添加新功能，或提供更好的实现。
 如果想使用多公众号，请参考另外一个项目：https://github.com/wechat-group/weixin-mp-multi-demo
 
