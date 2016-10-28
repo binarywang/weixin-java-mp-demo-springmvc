@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.binarywang.demo.spring.service.WeixinService;
 
-import me.chanjar.weixin.mp.bean.WxMpXmlMessage;
-import me.chanjar.weixin.mp.bean.WxMpXmlOutMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 
 /**
  * @author Binary Wang
