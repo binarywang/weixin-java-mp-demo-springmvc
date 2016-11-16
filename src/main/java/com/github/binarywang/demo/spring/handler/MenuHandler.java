@@ -2,8 +2,6 @@ package com.github.binarywang.demo.spring.handler;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -25,7 +23,6 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
  *
  */
 @Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MenuHandler extends AbstractHandler {
 
   @Override
