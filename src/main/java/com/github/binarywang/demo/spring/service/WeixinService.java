@@ -2,6 +2,7 @@ package com.github.binarywang.demo.spring.service;
 
 import javax.annotation.PostConstruct;
 
+import me.chanjar.weixin.mp.constant.WxMpEventConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,16 +88,19 @@ public class WeixinService extends WxMpServiceImpl {
     newRouter.rule().handler(this.logHandler).next();
 
     // 接收客服会话管理事件
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_CREATE_SESSION)
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+            .event(WxMpEventConstants.CustomerService.KF_CREATE_SESSION)
         .handler(this.kfSessionHandler).end();
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_CLOSE_SESSION)
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+            .event(WxMpEventConstants.CustomerService.KF_CLOSE_SESSION)
         .handler(this.kfSessionHandler).end();
-    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT).event(WxConsts.EVT_KF_SWITCH_SESSION)
+    newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
+            .event(WxMpEventConstants.CustomerService.KF_SWITCH_SESSION)
         .handler(this.kfSessionHandler).end();
     
     // 门店审核事件
     newRouter.rule().async(false).msgType(WxConsts.XML_MSG_EVENT)
-      .event(WxConsts.EVT_POI_CHECK_NOTIFY)
+      .event(WxMpEventConstants.POI_CHECK_NOTIFY)
       .handler(this.storeCheckNotifyHandler)
       .end();
 
