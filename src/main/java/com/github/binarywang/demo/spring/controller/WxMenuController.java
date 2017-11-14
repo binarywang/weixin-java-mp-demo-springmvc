@@ -1,6 +1,5 @@
 package com.github.binarywang.demo.spring.controller;
 
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -10,6 +9,8 @@ import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
 /**
  * <pre>
@@ -47,7 +48,7 @@ public class WxMenuController implements WxMpMenuService {
     public String menuCreateSample() throws WxErrorException {
         WxMenu menu = new WxMenu();
         WxMenuButton button1 = new WxMenuButton();
-        button1.setType(WxConsts.BUTTON_CLICK);
+        button1.setType(MenuButtonType.CLICK);
         button1.setName("今日歌曲");
         button1.setKey("V1001_TODAY_MUSIC");
 
@@ -66,17 +67,17 @@ public class WxMenuController implements WxMpMenuService {
         menu.getButtons().add(button3);
 
         WxMenuButton button31 = new WxMenuButton();
-        button31.setType(WxConsts.BUTTON_VIEW);
+        button31.setType(MenuButtonType.VIEW);
         button31.setName("搜索");
         button31.setUrl("http://www.soso.com/");
 
         WxMenuButton button32 = new WxMenuButton();
-        button32.setType(WxConsts.BUTTON_VIEW);
+        button32.setType(MenuButtonType.VIEW);
         button32.setName("视频");
         button32.setUrl("http://v.qq.com/");
 
         WxMenuButton button33 = new WxMenuButton();
-        button33.setType(WxConsts.BUTTON_CLICK);
+        button33.setType(MenuButtonType.CLICK);
         button33.setName("赞一下我们");
         button33.setKey("V1001_GOOD");
 
