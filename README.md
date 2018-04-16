@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo)
+[![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc)
 
 ### 本项目为weixin-java-tools的Demo演示程序，更多Demo请查阅：https://github.com/wechat-group/weixin-java-tools
 
