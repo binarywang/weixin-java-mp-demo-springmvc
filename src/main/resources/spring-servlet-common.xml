@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 	<!-- only scan the Controller class for web context -->
-	<context:component-scan base-package="com.github.binarywang.demo.spring.controller" />
+	<context:component-scan base-package="com.github.binarywang.demo.wx.mp.controller" />
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>
