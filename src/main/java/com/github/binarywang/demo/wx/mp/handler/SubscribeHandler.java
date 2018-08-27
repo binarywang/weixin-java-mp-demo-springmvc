@@ -1,30 +1,26 @@
 package com.github.binarywang.demo.wx.mp.handler;
 
-import java.util.Map;
-
 import com.github.binarywang.demo.wx.mp.builder.TextBuilder;
-import me.chanjar.weixin.common.error.WxErrorException;
-import org.springframework.stereotype.Component;
-
 import com.github.binarywang.demo.wx.mp.service.WeixinService;
-
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
- * 
  * @author Binary Wang
- *
  */
 @Component
 public class SubscribeHandler extends AbstractHandler {
 
   @Override
   public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
-      WxSessionManager sessionManager) throws WxErrorException {
+                                  WxSessionManager sessionManager) throws WxErrorException {
 
     this.logger.info("新关注用户 OPENID: " + wxMessage.getFromUser());
 
