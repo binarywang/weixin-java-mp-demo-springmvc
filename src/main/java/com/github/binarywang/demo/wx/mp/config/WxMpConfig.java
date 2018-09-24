@@ -15,7 +15,7 @@ public class WxMpConfig {
   private String appid;
 
   @Value("#{wxProperties.wx_appsecret}")
-  private String appsecret;
+  private String appSecret;
 
   @Value("#{wxProperties.wx_aeskey}")
   private String aesKey;
@@ -28,8 +28,8 @@ public class WxMpConfig {
     return this.appid;
   }
 
-  public String getAppsecret() {
-    return this.appsecret;
+  public String getAppSecret() {
+    return this.appSecret;
   }
 
   public String getAesKey() {

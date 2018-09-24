@@ -7,7 +7,7 @@
 
   <context:component-scan base-package="com.github.binarywang.demo.wx.mp">
     <context:exclude-filter type="annotation"
-      expression="org.springframework.stereotype.Controller" />
+                            expression="org.springframework.stereotype.Controller"/>
   </context:component-scan>
 
   <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
@@ -18,7 +18,7 @@
           <constructor-arg value="UTF-8"/>
         </bean>
         <bean
-          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
       </list>
     </property>
   </bean>
