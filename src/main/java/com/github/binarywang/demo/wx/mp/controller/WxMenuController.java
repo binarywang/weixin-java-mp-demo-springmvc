@@ -1,5 +1,13 @@
 package com.github.binarywang.demo.wx.mp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -7,8 +15,6 @@ import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
@@ -96,12 +102,12 @@ public class WxMenuController implements WxMpMenuService {
    * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
    * </pre>
    *
-   * @param json
+   * @param json 菜单json字符串
    * @return 如果是个性化菜单，则返回menuid，否则返回null
    */
   @Override
-  @GetMapping("/create/{json}")
-  public String menuCreate(@PathVariable String json) throws WxErrorException {
+  @PostMapping("/createByJson")
+  public String menuCreate(@RequestBody String json) throws WxErrorException {
     return this.wxService.getMenuService().menuCreate(json);
   }
 
