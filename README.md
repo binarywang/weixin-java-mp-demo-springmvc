@@ -1,3 +1,5 @@
+[![码云Gitee](https://gitee.com/binary/weixin-java-mp-demo/badge/star.svg?theme=blue)](https://gitee.com/binary/weixin-java-mp-demo)
+[![Github](http://github-svg-buttons.herokuapp.com/star.svg?user=binarywang&repo=weixin-java-mp-demo-springmvc&style=flat&background=1081C1)](https://github.com/binarywang/weixin-java-mp-demo-springmvc)
 [![Build Status](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc.svg?branch=master)](https://travis-ci.org/binarywang/weixin-java-mp-demo-springmvc)
 
 ### 本Demo使用Spring MVC 框架实现微信公众号开发功能。
