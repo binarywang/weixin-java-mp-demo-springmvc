@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class WxMpPortalController {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
   
-  @Autowired
   private WeixinService wxService;
+
+  @Autowired
+  public WxMpPortalController(WeixinService wxService) {
+    this.wxService = wxService;
+  }
 
   @ResponseBody
   @GetMapping(produces = "text/plain;charset=utf-8")

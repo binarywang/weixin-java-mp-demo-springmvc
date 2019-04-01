@@ -1,37 +1,29 @@
 package com.github.binarywang.demo.wx.mp.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpGetSelfMenuInfoResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import static me.chanjar.weixin.common.api.WxConsts.MenuButtonType;
 
 /**
- * <pre>
- *  注意：此contorller 实现WxMpMenuService接口，仅是为了演示如何调用所有菜单相关操作接口，
- *      实际项目中无需这样，根据自己需要添加对应接口即可
- * </pre>
- *
  * @author Binary Wang(https://github.com/binarywang)
  */
 @RestController
 @RequestMapping("/wechat/menu")
-public class WxMenuController implements WxMpMenuService {
+public class WxMenuController {
+
+  private WxMpService wxService;
 
   @Autowired
-  private WxMpService wxService;
+  public WxMenuController(WxMpService wxService) {
+    this.wxService = wxService;
+  }
 
   /**
    * <pre>
@@ -44,7 +36,6 @@ public class WxMenuController implements WxMpMenuService {
    * @param menu 菜单
    * @return 如果是个性化菜单，则返回menuid，否则返回null
    */
-  @Override
   @PostMapping("/create")
   public String menuCreate(@RequestBody WxMenu menu) throws WxErrorException {
     return this.wxService.getMenuService().menuCreate(menu);
@@ -105,7 +96,6 @@ public class WxMenuController implements WxMpMenuService {
    * @param json 菜单json字符串
    * @return 如果是个性化菜单，则返回menuid，否则返回null
    */
-  @Override
   @PostMapping("/createByJson")
   public String menuCreate(@RequestBody String json) throws WxErrorException {
     return this.wxService.getMenuService().menuCreate(json);
@@ -117,7 +107,6 @@ public class WxMenuController implements WxMpMenuService {
    * 详情请见: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141015&token=&lang=zh_CN
    * </pre>
    */
-  @Override
   @GetMapping("/delete")
   public void menuDelete() throws WxErrorException {
     this.wxService.getMenuService().menuDelete();
@@ -131,7 +120,6 @@ public class WxMenuController implements WxMpMenuService {
    *
    * @param menuId 个性化菜单的menuid
    */
-  @Override
   @GetMapping("/delete/{menuId}")
   public void menuDelete(@PathVariable String menuId) throws WxErrorException {
     this.wxService.getMenuService().menuDelete(menuId);
@@ -143,7 +131,6 @@ public class WxMenuController implements WxMpMenuService {
    * 详情请见： https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014&token=&lang=zh_CN
    * </pre>
    */
-  @Override
   @GetMapping("/get")
   public WxMpMenu menuGet() throws WxErrorException {
     return this.wxService.getMenuService().menuGet();
@@ -155,12 +142,11 @@ public class WxMenuController implements WxMpMenuService {
    * 详情请见: http://mp.weixin.qq.com/wiki/0/c48ccd12b69ae023159b4bfaa7c39c20.html
    * </pre>
    *
-   * @param userid 可以是粉丝的OpenID，也可以是粉丝的微信号。
+   * @param userId 可以是粉丝的OpenID，也可以是粉丝的微信号。
    */
-  @Override
-  @GetMapping("/menuTryMatch/{userid}")
-  public WxMenu menuTryMatch(@PathVariable String userid) throws WxErrorException {
-    return this.wxService.getMenuService().menuTryMatch(userid);
+  @GetMapping("/menuTryMatch/{userId}")
+  public WxMenu menuTryMatch(@PathVariable String userId) throws WxErrorException {
+    return this.wxService.getMenuService().menuTryMatch(userId);
   }
 
   /**
@@ -178,7 +164,6 @@ public class WxMenuController implements WxMpMenuService {
    * https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN
    * </pre>
    */
-  @Override
   @GetMapping("/getSelfMenuInfo")
   public WxMpGetSelfMenuInfoResult getSelfMenuInfo() throws WxErrorException {
     return this.wxService.getMenuService().getSelfMenuInfo();
