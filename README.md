@@ -4,10 +4,9 @@
 
 ### 本Demo使用Spring MVC 框架实现微信公众号开发功能。
 
-#### 本项目为WxJava的Demo演示程序，更多Demo请[查阅此处](https://github.com/Wechat-Group/WxJava/blob/master/demo.md)。
+#### 本项目为WxJava的Demo演示程序，更多Demo请 [查阅此处](https://github.com/Wechat-Group/WxJava/blob/master/demo.md)。
 
-如果想支持多公众号，请参考spring boot版本的demo：https://github.com/binarywang/weixin-java-mp-demo-springboot ，
-或者此项目：https://github.com/binarywang/weixin-java-mp-multi-demo
+如果想支持多公众号，请参考spring boot版本的demo：https://github.com/binarywang/weixin-java-mp-demo-springboot
 
 ## 使用步骤：
 1. 新手遇到问题，请务必先阅读[【开发文档首页】](https://github.com/Wechat-Group/WxJava/wiki)的常见问题部分，可以少走很多弯路，节省不少时间。
