@@ -1,6 +1,5 @@
 package com.github.binarywang.demo.wx.mp.handler;
 
-import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -8,6 +7,8 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+
+import static me.chanjar.weixin.common.api.WxConsts.EventType;
 
 /**
  * @author Binary Wang
@@ -21,7 +22,7 @@ public class MenuHandler extends AbstractHandler {
     String msg = String.format("type:%s, event:%s, key:%s",
       wxMessage.getMsgType(), wxMessage.getEvent(),
       wxMessage.getEventKey());
-    if (WxConsts.MenuButtonType.VIEW.equals(wxMessage.getEvent())) {
+    if (EventType.VIEW.equals(wxMessage.getEvent())) {
       return null;
     }
 
@@ -29,6 +30,4 @@ public class MenuHandler extends AbstractHandler {
       .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())
       .build();
   }
-
-
 }
