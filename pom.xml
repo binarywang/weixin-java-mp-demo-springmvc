@@ -22,7 +22,7 @@
         <aspectj.version>1.8.9</aspectj.version>
         <fastjson.version>1.2.31</fastjson.version>
         <commons-lang3.version>3.5</commons-lang3.version>
-        <jackson.version>2.10.0.pr1</jackson.version>
+        <jackson.version>2.12.6.1</jackson.version>
         <jetty-maven-plugin.version>9.3.0.RC0</jetty-maven-plugin.version>
     </properties>
 
