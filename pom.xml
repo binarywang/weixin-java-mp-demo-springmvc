@@ -20,7 +20,7 @@
         <guava.version>29.0-jre</guava.version>
         <slf4j.version>1.7.24</slf4j.version>
         <aspectj.version>1.8.9</aspectj.version>
-        <fastjson.version>1.2.31</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <jackson.version>2.12.6.1</jackson.version>
         <jetty-maven-plugin.version>9.3.0.RC0</jetty-maven-plugin.version>
