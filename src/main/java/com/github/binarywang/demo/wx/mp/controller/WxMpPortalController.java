@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wechat/portal")
 public class WxMpPortalController {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
-  
+
   private WeixinService wxService;
 
   @Autowired
@@ -30,7 +30,7 @@ public class WxMpPortalController {
                         @RequestParam(name = "timestamp", required = false) String timestamp,
                         @RequestParam(name = "nonce", required = false) String nonce,
                         @RequestParam(name = "echostr", required = false) String echostr) {
-    this.logger.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature, timestamp, nonce, echostr);
+    log.info("\n接收到来自微信服务器的认证消息：[{}, {}, {}, {}]", signature, timestamp, nonce, echostr);
 
     if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
       throw new IllegalArgumentException("请求参数非法，请核实!");
@@ -49,7 +49,7 @@ public class WxMpPortalController {
                      @RequestParam(name = "encrypt_type", required = false) String encType,
                      @RequestParam(name = "msg_signature", required = false) String msgSignature,
                      @RequestParam("timestamp") String timestamp, @RequestParam("nonce") String nonce) {
-    this.logger.info("\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
+    log.info("\n接收微信请求：[signature=[{}], encType=[{}], msgSignature=[{}],"
         + " timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
       signature, encType, msgSignature, timestamp, nonce, requestBody);
 
@@ -71,7 +71,7 @@ public class WxMpPortalController {
       // aes加密的消息
       WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(requestBody,
         this.wxService.getWxMpConfigStorage(), timestamp, nonce, msgSignature);
-      this.logger.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+      log.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
       WxMpXmlOutMessage outMessage = this.wxService.route(inMessage);
       if (outMessage == null) {
         return "";
@@ -80,7 +80,7 @@ public class WxMpPortalController {
       out = outMessage.toEncryptedXml(this.wxService.getWxMpConfigStorage());
     }
 
-    this.logger.debug("\n组装回复信息：{}", out);
+    log.debug("\n组装回复信息：{}", out);
 
     return out;
   }

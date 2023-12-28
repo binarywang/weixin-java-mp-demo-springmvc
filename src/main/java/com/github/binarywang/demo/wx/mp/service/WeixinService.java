@@ -126,7 +126,7 @@ public class WeixinService extends WxMpServiceImpl {
     try {
       return this.router.route(message);
     } catch (Exception e) {
-      this.logger.error(e.getMessage(), e);
+      log.error(e.getMessage(), e);
     }
 
     return null;
@@ -137,7 +137,7 @@ public class WeixinService extends WxMpServiceImpl {
       WxMpKfOnlineList kfOnlineList = this.getKefuService().kfOnlineList();
       return kfOnlineList != null && kfOnlineList.getKfOnlineList().size() > 0;
     } catch (Exception e) {
-      this.logger.error("获取客服在线状态异常: " + e.getMessage(), e);
+      log.error("获取客服在线状态异常: " + e.getMessage(), e);
     }
 
     return false;
