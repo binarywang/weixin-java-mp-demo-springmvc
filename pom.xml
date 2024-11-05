@@ -16,7 +16,7 @@
 
         <weixin-java-mp.version>4.6.0</weixin-java-mp.version>
         <spring.version>6.0.18</spring.version>
-        <spring-security.version>5.5.7</spring-security.version>
+        <spring-security.version>5.7.12</spring-security.version>
         <guava.version>32.0.0-jre</guava.version>
         <slf4j.version>1.7.36</slf4j.version>
         <aspectj.version>1.9.9.1</aspectj.version>
