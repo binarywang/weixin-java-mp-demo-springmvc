@@ -22,7 +22,7 @@
         <spring.version>6.1.13</spring.version>
 >>>>>>> 8e89387 (:arrow_up: 升级sdk版本为4.7.0)
         <spring-security.version>5.5.7</spring-security.version>
-        <spring-security.version>5.7.12</spring-security.version>
+        <spring-security.version>5.7.14</spring-security.version>
         <guava.version>32.0.0-jre</guava.version>
         <slf4j.version>1.7.36</slf4j.version>
         <aspectj.version>1.9.9.1</aspectj.version>
