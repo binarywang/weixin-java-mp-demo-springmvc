@@ -16,7 +16,7 @@
 
 <<<<<<< HEAD
         <weixin-java-mp.version>4.6.0</weixin-java-mp.version>
-        <spring.version>6.1.13</spring.version>
+        <spring.version>6.1.14</spring.version>
 =======
         <weixin-java-mp.version>4.7.0</weixin-java-mp.version>
         <spring.version>6.1.13</spring.version>
